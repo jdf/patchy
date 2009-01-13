@@ -37,131 +37,72 @@
 		</div>
 		
 		<div id="content" class="clear">
-			
-			<div id="demos" class="clear">
-				<h2>demo</h2>
-				<table><tr>
-				<td>
-				<!--[if !IE]> -->
-					<object classid="java:HelloPeasy.class" 
-	            			type="application/x-java-applet"
-	            			archive="HelloPeasy.jar,PeasyCam.jar,core.jar"
-	            			width="200" height="200"
-	            			standby="Loading Processing software..." >
-	            			
-						<param name="archive" value="HelloPeasy.jar,PeasyCam.jar,core.jar" />
-					
-						<param name="mayscript" value="true" />
-						<param name="scriptable" value="true" />
-					
-						<param name="image" value="loading.gif" />
-						<param name="boxmessage" value="Loading Processing software..." />
-						<param name="boxbgcolor" value="#FFFFFF" />
-					
-						<param name="test_string" value="outer" />
-				<!--<![endif]-->
-					
-					<object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" 
-							codebase="http://java.sun.com/update/1.5.0/jinstall-1_5_0_15-windows-i586.cab"
-							width="200" height="200"
-							standby="Loading Processing software..."  >
-							
-						<param name="code" value="HelloPeasy" />
-						<param name="archive" value="HelloPeasy.jar,PeasyCam.jar,core.jar" />
 						
-						<param name="mayscript" value="true" />
-						<param name="scriptable" value="true" />
-						
-						<param name="image" value="loading.gif" />
-						<param name="boxmessage" value="Loading Processing software..." />
-						<param name="boxbgcolor" value="#FFFFFF" />
-						
-						<param name="test_string" value="inner" />
-						
-						<p>
-							<strong>
-								This browser does not have a Java Plug-in.
-								<br />
-								<a href="http://java.sun.com/products/plugin/downloads/index.html" title="Download Java Plug-in">
-									Get the latest Java Plug-in here.
-								</a>
-							</strong>
-						</p>
-					
-					</object>
-					
-				<!--[if !IE]> -->
-					</object>
-				<!--<![endif]-->
-				<p>
-					left-drag to rotate
-					<br/>
-					right-drag up and down to zoom
-					<br/>
-					middle-drag (cmd-left-drag on mac) to pan
-					<br/>
-					double-click to reset
-				</p>
-				
-			</td>
-			<td>
-<pre>import peasy.*;
-
-PeasyCam cam;
-
-void setup() {
-  size(200,200,P3D);
-  cam = new PeasyCam(this, 100);
-}
-void draw() {
-  rotateX(-.5);
-  rotateY(-.5);
-  background(0);
-  fill(255,0,0);
-  box(30);
-  pushMatrix();
-  translate(0,0,20);
-  fill(0,0,255);
-  box(5);
-  popMatrix();
-}
-</pre>
-			</td>
-			</tr></table>
-			</div>
-			
-			
 			<div id="about">
 			<h2>##yourLibrary## v##versionNumber##</h2>
 			<p>
 			A library by <a href="##yourLink##">##author##</a> for the programming environment <a href="http://www.processing.org" target="_blank">processing</a>. Last update, ##date##.
 			</p>
+			<div id="demos" class="clear">
+			<!--[if !IE]> -->
+				<object classid="java:HelloPatchy.class" 
+            			type="application/x-java-applet"
+            			archive="HelloPatchy.jar,PeasyCam.jar,Patchy.jar,core.jar"
+            			width="400" height="400"
+            			standby="Loading Processing software..." >
+            			
+					<param name="archive" value="HelloPatchy.jar,PeasyCam.jar,Patchy.jar,core.jar" />
+				
+					<param name="mayscript" value="true" />
+					<param name="scriptable" value="true" />
+				
+					<param name="image" value="loading.gif" />
+					<param name="boxmessage" value="Loading Processing software..." />
+					<param name="boxbgcolor" value="#FFFFFF" />
+				
+					<param name="test_string" value="outer" />
+			<!--<![endif]-->
+				
+				<object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" 
+						codebase="http://java.sun.com/update/1.5.0/jinstall-1_5_0_15-windows-i586.cab"
+						width="400" height="400"
+						standby="Loading Processing software..."  >
+						
+					<param name="code" value="HelloPatchy" />
+					<param name="archive" value="HelloPatchy.jar,PeasyCam.jar,Patchy.jar,core.jar" />
+					
+					<param name="mayscript" value="true" />
+					<param name="scriptable" value="true" />
+					
+					<param name="image" value="loading.gif" />
+					<param name="boxmessage" value="Loading Processing software..." />
+					<param name="boxbgcolor" value="#FFFFFF" />
+					
+					<param name="test_string" value="inner" />
+					
+					<p>
+						<strong>
+							This browser does not have a Java Plug-in.
+							<br />
+							<a href="http://java.sun.com/products/plugin/downloads/index.html" title="Download Java Plug-in">
+								Get the latest Java Plug-in here.
+							</a>
+						</strong>
+					</p>
+				
+				</object>
+				
+			<!--[if !IE]> -->
+				</object>
+			<!--<![endif]-->
 
-<p>PeasyCam provides a dead-simple mouse-driven camera for Processing. </p>
-<h3>Example</h3>
-<pre>PeasyCam camera;
+			</div>
 
-void setup() {
-    camera = new PeasyCam(this, 0, 0, 0, 50);
-}</pre>
-<p>
-	That's it. Now a mouse left-drag will rotate the camera around the subject, 
-	a right drag will zoom in and out, and a middle-drag (command-left-drag on mac) will pan. A 
-	double-click restores the camera to its original position. The shift key constrains rotation
-	and panning to one axis or the other.
+<p>Patchy provides an easy-to-use bicubic patch for 
+3D graphics in the Processing programming environment. 
 </p>
-<p>
-	The PeasyCam is positioned on a sphere whose radius is the given 
-	distance from the look-at point. Rotations are around axes that 
-	pass through the looked-at point.
-</p>
-
-<p>
-	PeasyCam is impervious to gimbal lock, and has no known "singularities" or 
-	discontinuities in its behavior. It relies on the excellent 
-	<a href="http://commons.apache.org/math/">Apache Commons Math</a>
-	<a href="http://commons.apache.org/math/userguide/geometry.html">geometry package</a>
-	for its rotations.
+<p>Part of Patchy is based on code freely provided by 
+<a href="http://www.mrl.nyu.edu/%7Eperlin/">Ken Perlin</a>. 
 </p>
 
 			<div id="download">
@@ -177,24 +118,47 @@ void setup() {
 			</div>	
 			
 
-<h3>Constructors</h3>
-<pre class="prettyprint">PeasyCam(PApplet parent, double lookAtX, double lookAtY, double lookAtZ, double distance);
-PeasyCam(PApplet parent, double distance); // look at 0,0,0
-</pre>
+<h2>Patch Types (Basis Matrices)</h2>
+<pre class="prettyprint">Patch.BEZIER
+Patch.BSPLINE
+Patch.CATMULL_ROM
+Patch.HERMITE</pre>
 
-<h3>Methods</h3>
-<pre class="prettyprint">camera.setMouseControlled(boolean isMouseControlled);
-camera.lookAt(double x, double y, double z);
-camera.rotateX(double angle);  // rotate around the x-axis passing through the subject
-camera.rotateY(double angle);  // rotate around the y-axis passing through the subject
-camera.rotateZ(double angle);  // rotate around the z-axis passing through the subject
-camera.setDistance(double d);  // distance from looked-at point
-camera.pan(double dx, double dy);     // move the looked-at point relative to current orientation</pre>
+<h2>Constructing a Patch</h2>
+<pre class="prettyprint">// control points as a 4x4 matrix of PVectors
+Patch.create(double[][] basis, PVector[][] controlPoints, int gridSteps);
+Patch.create(double[][] basis, PVector[][] controlPoints);  // default 20 grid steps
+
+// control points as three 4x4 matrices of x, y, and z coordinates
+Patch.create(double[][] basis, 
+             double[][] cpX, double[][] cpY, double[][] cpZ, 
+             int gridSteps);
+Patch.create(double[][] basis, 
+             double[][] cpX, double[][] cpY, double[][] cpZ);
+
+// the same but with floats, which are more Processing-friendly
+Patch.create(double[][] basis, 
+             float[][] cpX, float[][] cpY, float[][] cpZ, 
+             int gridSteps);
+Patch.create(double[][] basis, 
+             float[][] cpX, float[][] cpY, float[][] cpZ);</pre>
+             
+<h2>Drawing a Patch</h2>
+<pre class="prettyprint">void draw(PApplet p); // uses current stroke, fill, and transforms
+void drawControlPoints(PApplet p);  // useful for debugging</pre>
+
+<h2>Other Useful Methods</h2>
+<pre class="prettyprint">BoundingVolume getBounds();  // for figuring out scale and position
+void set(int row, int col, double xVal, double yVal, double zVal);
+void set(int row, int col, PVector p);
+void setX(int row, int col, double val);
+void setY(int row, int col, double val);
+void setZ(int row, int col, double val);
+
+// set the number of vertices created when rendering patch as triangles
+void setGridSteps(int gridSteps);</pre>
 
 			</div>
-			
-			
-			
 			
 			<div id="resources">
 			<p><strong>Keywords</strong> ##keywords##</p>
@@ -202,7 +166,6 @@ camera.pan(double dx, double dy);     // move the looked-at point relative to cu
 			<p><strong>Source</strong>. The source code of ##yourLibrary## is available at <a href="##source:url##">##source:host##</a>, and its repository can be browsed <a href="##source:repository##" target="_blank">here</a>.</p>			
 			</div>
 			
-			<!-- 
 			<div id="examples" class="clear">
 			<h2>Examples</h2>
 			<p>Find a list of examples in the current distribution of ##yourLibrary##, or have a look at them by following the links below.</p>
@@ -210,7 +173,6 @@ camera.pan(double dx, double dy);     // move the looked-at point relative to cu
 			##examples##
 			</ul>
 			</div>
-			 -->
 			
 			<div id="info">
 			<h2>Tested</h2>

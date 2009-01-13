@@ -223,6 +223,12 @@ public class Patch
 		dirty = true;
 	}
 
+	public void setGridSteps(final int gridSteps)
+	{
+		this.gridSteps = gridSteps;
+		dirty = true;
+	}
+
 	public void draw(final PApplet p)
 	{
 		draw(p, true);
