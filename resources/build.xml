@@ -114,7 +114,7 @@
 		</copy>
 
 		<!-- zip the distribution of the library -->
-		<zip destfile="${dist}/${libraryName}.zip" basedir="${dist}" excludes="**/_DS.Store" />
+		<zip destfile="${dist}/${libraryName}.zip" basedir="${dist}" excludes="**/_DS.Store,**/applet/**" />
 
 		<rename src="${dist}/${libraryName}.zip" dest="${dist}/${libraryName}_${versionNumber}.zip" />
 
