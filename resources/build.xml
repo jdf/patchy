@@ -18,9 +18,9 @@
 	<property name="author" value="Jonathan Feinberg" />
 	<property name="copyright" value="(c) 2008" />
 	<property name="libraryName" value="Patchy" />
-	<property name="versionNumber" value="0.1.0" />
+	<property name="versionNumber" value="0.1.1" />
 	<property name="yourLink" value="http://mrfeinberg.com/" />
-	<property name="keywords" value="bicubic,patch,Bezier,Hermite,Catmull-Rom" />
+	<property name="keywords" value="bicubic,patch,Bezier,Hermite,Catmull-Rom,BSpline,parametric surface" />
 	<property name="tested:platform" value="Windows" />
 	<property name="tested:processingVersion" value="1.0.1" />
 	<property name="tested:dependencies" value="" />
