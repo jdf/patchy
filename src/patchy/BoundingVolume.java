@@ -91,7 +91,7 @@ public class BoundingVolume
 
 	public final Range x, y, z;
 
-	BoundingVolume()
+	public BoundingVolume()
 	{
 		this(new Range(), new Range(), new Range());
 	}
@@ -101,6 +101,11 @@ public class BoundingVolume
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+
+	public BoundingVolume with(final BoundingVolume v)
+	{
+		return with(v.x.min, v.y.min, v.z.min).with(v.x.max, v.y.max, v.z.max);
 	}
 
 	BoundingVolume with(final PVector v)

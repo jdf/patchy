@@ -20,7 +20,7 @@
 	<property name="libraryName" value="Patchy" />
 	<property name="versionNumber" value="0.1.0" />
 	<property name="yourLink" value="http://mrfeinberg.com/" />
-	<property name="keywords" value="3D,camera,rotation" />
+	<property name="keywords" value="bicubic,patch,Bezier,Hermite,Catmull-Rom" />
 	<property name="tested:platform" value="Windows" />
 	<property name="tested:processingVersion" value="1.0.1" />
 	<property name="tested:dependencies" value="" />
