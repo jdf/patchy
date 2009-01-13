@@ -55,6 +55,11 @@ public class BoundingVolume
 			return new Range(value < min ? value : min, value > max ? value : max);
 		}
 
+		Range scaled(final double scale)
+		{
+			return new Range(min * scale, max * scale);
+		}
+
 		public float center()
 		{
 			return (float) (min + ((max - min) / 2.0));
@@ -63,6 +68,16 @@ public class BoundingVolume
 		public float length()
 		{
 			return (float) (max - min);
+		}
+
+		public float minimum()
+		{
+			return (float) min;
+		}
+
+		public float maximum()
+		{
+			return (float) max;
 		}
 
 		private static final DecimalFormat F = new DecimalFormat("0.0");
@@ -96,6 +111,11 @@ public class BoundingVolume
 	BoundingVolume with(final double xv, final double yv, final double zv)
 	{
 		return new BoundingVolume(x.with(xv), y.with(yv), z.with(zv));
+	}
+
+	public BoundingVolume scaled(final double scale)
+	{
+		return new BoundingVolume(x.scaled(scale), y.scaled(scale), z.scaled(scale));
 	}
 
 	public float maxDimension()
