@@ -36,46 +36,21 @@ import processing.core.PVector;
  */
 public class Bicubic
 {
-	public static final double[][] BEZIER = { // Bezier basis matrix
-	{ -1, 3, -3, 1 }, //
-			{ 3, -6, 3, 0 }, //
-			{ -3, 3, 0, 0 }, //
-			{ 1, 0, 0, 0 } };
-	public static final double[][] BSPLINE = { // BSpline basis matrix
-	{ -1. / 6, 3. / 6, -3. / 6, 1. / 6 }, //
-			{ 3. / 6, -6. / 6, 3. / 6, 0. },//
-			{ -3. / 6, 0., 3. / 6, 0. }, //
+	public static final double[][] BEZIER = { { -1, 3, -3, 1 }, { 3, -6, 3, 0 },
+			{ -3, 3, 0, 0 }, { 1, 0, 0, 0 } };
+	public static final double[][] BSPLINE = { { -1. / 6, 3. / 6, -3. / 6, 1. / 6 },
+			{ 3. / 6, -6. / 6, 3. / 6, 0. }, { -3. / 6, 0., 3. / 6, 0. },
 			{ 1. / 6, 4. / 6, 1. / 6, 0. } };
-	public static final double[][] CATMULL_ROM = { // Catmull-Rom basis matrix
-	{ -0.5, 1.5, -1.5, 0.5 }, //
-			{ 1, -2.5, 2, -0.5 }, //
-			{ -0.5, 0, 0.5, 0 }, //
-			{ 0, 1, 0, 0 } };
-	public static final double[][] HERMITE = { // Hermite basis matrix
-	{ 2, -2, 1, 1 }, //
-			{ -3, 3, -2, -1 }, //
-			{ 0, 0, 1, 0 }, //
-			{ 1, 0, 0, 0 } };
+	public static final double[][] CATMULL_ROM = { { -0.5, 1.5, -1.5, 0.5 },
+			{ 1, -2.5, 2, -0.5 }, { -0.5, 0, 0.5, 0 }, { 0, 1, 0, 0 } };
+	public static final double[][] HERMITE = { { 2, -2, 1, 1 }, { -3, 3, -2, -1 },
+			{ 0, 0, 1, 0 }, { 1, 0, 0, 0 } };
 
-	final double[][] C = new double[4][4];
+	final double[][] C;
 
 	public Bicubic(final double[][] basis, final double[][] controlPoints)
 	{
-		double[][] T = new double[4][4];
-
-		for (int i = 0; i < 4; i++)
-			// T = G MT
-			for (int j = 0; j < 4; j++)
-				for (int k = 0; k < 4; k++)
-					T[i][j] += controlPoints[i][k] * basis[j][k];
-
-		for (int i = 0; i < 4; i++)
-			// C = M T
-			for (int j = 0; j < 4; j++)
-				for (int k = 0; k < 4; k++)
-					C[i][j] += basis[i][k] * T[k][j];
-
-		//		C = multiply(basis, multiply(controlPoints, basis));
+		C = multiply(basis, multiply(controlPoints, transpose(basis)));
 	}
 
 	private static class EvalResult
@@ -136,6 +111,15 @@ public class Bicubic
 		return outData;
 	}
 
+	private static double[][] transpose(final double[][] m)
+	{
+		final double[][] result = new double[4][4];
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				result[i][j] = m[j][i];
+		return result;
+	}
+
 	private static double multiply0_0(final double[][] a, final double[][] b)
 	{
 		final int nSum = a[0].length;
@@ -143,13 +127,5 @@ public class Bicubic
 		for (int i = 0; i < nSum; i++)
 			sum += a[0][i] * b[i][0];
 		return sum;
-	}
-
-	public static void main(final String[] args)
-	{
-		final double[][] cpX = new double[][] { { 23, 41, 59, 77 }, { 23, 41, 59, 77 },
-				{ 23, 41, 59, 77 }, { 23, 41, 59, 77 } };
-		Bicubic cubic = new Bicubic(BSPLINE, cpX);
-		System.err.println(cubic.eval(0, 0).value);
 	}
 }
