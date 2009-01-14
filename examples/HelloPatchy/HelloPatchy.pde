@@ -6,6 +6,7 @@ float scale;
 BoundingVolume bounds;
 PeasyCam cam;
 int selectedBasis = 1;
+PImage tex;
 
 void setup()
 {
@@ -33,7 +34,7 @@ void setup()
   scale = width / bounds.boundingSphereRadius();
   cam = new PeasyCam(this, bounds.x.center() * scale, bounds.y.center() * scale
     - 50, bounds.z.center() * scale, width);
-
+  tex = loadImage("gabeface.jpg");
 }
 
 public void draw()
@@ -55,9 +56,8 @@ public void draw()
   pointLight(160, 100, 100, bounds.x.center() + 3 * bounds.boundingSphereRadius(),
   -(bounds.y.center() + bounds.boundingSphereRadius()), bounds.z.center());
 
-  fill(255, 255, 0);
   noStroke();
-  patch.draw(this);
+  patch.draw(this, tex);
 
   noStroke();
   fill(0, 255, 0);
