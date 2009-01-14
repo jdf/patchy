@@ -53,7 +53,7 @@ public void draw()
   translate(-bounds.x.center(), -bounds.y.center(), -bounds.z.center());
 
   lights();
-  pointLight(160, 100, 100, bounds.x.center() + 3 * bounds.boundingSphereRadius(),
+  pointLight(160, 160, 160, bounds.x.center() + 3 * bounds.boundingSphereRadius(),
   -(bounds.y.center() + bounds.boundingSphereRadius()), bounds.z.center());
 
   noStroke();
