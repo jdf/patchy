@@ -20,6 +20,7 @@ package patchy;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
+import processing.core.PImage;
 import processing.core.PVector;
 
 /**
@@ -229,51 +230,61 @@ public class Patch
 		dirty = true;
 	}
 
-	public void draw(final PApplet p)
+	private void vertex(final PApplet p, final int row, final int col,
+			final boolean textured)
 	{
-		draw(p, true);
+		final VertexWithNormal point = rasterizedPoints[row][col];
+		final PVector normal = point.normal;
+		final PVector vertex = point.vertex;
+		if (p.g.fill)
+			p.normal(normal.x, normal.y, normal.z);
+		if (textured)
+			p.vertex(vertex.x, vertex.y, vertex.z, (float) col / rasterizedPoints.length,
+					(float) row / rasterizedPoints.length);
+		else
+			p.vertex(vertex.x, vertex.y, vertex.z);
 	}
 
-	public void draw(final PApplet p, final boolean norm)
+	public void draw(final PApplet p)
 	{
+		draw(p, null);
+	}
+
+	public void draw(final PApplet p, final PImage texture)
+	{
+
 		if (dirty)
 			rasterize();
 		final VertexWithNormal[][] rp = rasterizedPoints;
-		for (int i = 0; i < gridSteps; i++)
-			for (int j = 0; j < gridSteps; j++)
+		p.beginShape(PConstants.TRIANGLE_STRIP);
+		final boolean textured = texture != null;
+		if (textured)
+		{
+			p.textureMode(PConstants.NORMAL);
+			p.texture(texture);
+		}
+		for (int row = 0; row < rp.length - 1; row++)
+		{
+			if (row % 2 == 0)
 			{
-				final PVector normA = rp[i][j].normal;
-				final PVector vertA = rp[i][j].vertex;
-				final PVector normB = rp[i + 1][j].normal;
-				final PVector vertB = rp[i + 1][j].vertex;
-				final PVector normC = rp[i][j + 1].normal;
-				final PVector vertC = rp[i][j + 1].vertex;
-				final PVector normD = rp[i + 1][j + 1].normal;
-				final PVector vertD = rp[i + 1][j + 1].vertex;
-
-				p.beginShape();
-				if (norm)
-					p.normal(normA.x, normA.y, normA.z);
-				p.vertex(vertA.x, vertA.y, vertA.z);
-				if (norm)
-					p.normal(normB.x, normB.y, normB.z);
-				p.vertex(vertB.x, vertB.y, vertB.z);
-				if (norm)
-					p.normal(normC.x, normC.y, normC.z);
-				p.vertex(vertC.x, vertC.y, vertC.z);
-				p.endShape(PConstants.CLOSE);
-				p.beginShape();
-				if (norm)
-					p.normal(normB.x, normB.y, normB.z);
-				p.vertex(vertB.x, vertB.y, vertB.z);
-				if (norm)
-					p.normal(normD.x, normD.y, normD.z);
-				p.vertex(vertD.x, vertD.y, vertD.z);
-				if (norm)
-					p.normal(normC.x, normC.y, normC.z);
-				p.vertex(vertC.x, vertC.y, vertC.z);
-				p.endShape(PConstants.CLOSE);
+				for (int col = 0; col < rp.length; col++)
+				{
+					vertex(p, row, col, textured);
+					vertex(p, row + 1, col, textured);
+				}
 			}
+			else
+			{
+				for (int col = rp.length - 1; col > 0; col--)
+				{
+					vertex(p, row + 1, col, textured);
+					vertex(p, row, col - 1, textured);
+				}
+			}
+		}
+		if (rp.length % 2 == 1)
+			vertex(p, rp.length - 1, 0, textured);
+		p.endShape();
 	}
 
 	public void drawControlPoints(final PApplet p)
