@@ -36,6 +36,8 @@ body {
 }
 
 
+#demos { margin-bottom: 1.5em }
+
 #about,
 #download,
 #examples,
@@ -96,9 +98,10 @@ h2, h3, h4, h5, th {
 
 
 p { 
-	font-size:1em;
+	font-size:1.1em;
 	width:90%;
-	margin-bottom:32px;
+	margin-bottom:2em;
+	line-height: 130%;
 }
 
 
