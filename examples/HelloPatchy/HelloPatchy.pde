@@ -6,6 +6,7 @@ float scale;
 BoundingVolume bounds;
 PeasyCam cam;
 int selectedBasis = 1;
+int selectedFill = 1;
 PImage tex;
 
 void setup()
@@ -53,12 +54,25 @@ public void draw()
   translate(-bounds.x.center(), -bounds.y.center(), -bounds.z.center());
 
   lights();
-  pointLight(160, 160, 160, bounds.x.center() + 3 * bounds.boundingSphereRadius(),
-  -(bounds.y.center() + bounds.boundingSphereRadius()), bounds.z.center());
 
-  noStroke();
-  patch.draw(this, tex);
-
+  if (selectedFill == 1) {
+    noStroke();
+    pointLight(160, 160, 160, bounds.x.center() + 3 * bounds.boundingSphereRadius(),
+    -(bounds.y.center() + bounds.boundingSphereRadius()), bounds.z.center());
+    patch.draw(this, tex);
+  } 
+  else if (selectedFill == 2) {
+    noStroke();
+    pointLight(160, 50, 50, bounds.x.center() + 3 * bounds.boundingSphereRadius(),
+    -(bounds.y.center() + bounds.boundingSphereRadius()), bounds.z.center());
+    fill(160, 160, 40);
+    patch.draw(this);
+  } 
+  else {
+    noFill();
+    stroke(0, 255, 0); 
+    patch.draw(this);
+  }
   noStroke();
   fill(0, 255, 0);
   patch.drawControlPoints(this);
@@ -78,8 +92,16 @@ private void instructions()
   text("3 - Catmull-Rom", 10, 45);
   fill(selectedBasis == 4 ? color(0, 255, 0) : 255);
   text("4 - Hermite", 10, 60);
+
+  fill(selectedFill == 1 ? color(0, 255, 0) : 255);
+  text("a - Textured", 10, 90);
+  fill(selectedFill == 2 ? color(0, 255, 0) : 255);
+  text("b - Filled", 10, 105);
+  fill(selectedFill == 3 ? color(0, 255, 0) : 255);
+  text("c - Wireframe", 10, 120);
+
   fill(255);
-  text("Drag to look around.", 10, height - 8);
+  text("Drag to look around. Right-drag to zoom.", 10, height - 8);
 }
 
 private void animateControlPoints()
@@ -100,17 +122,25 @@ private void animateControlPoints()
 public void keyPressed(final KeyEvent e)
 {
   final char c = e.getKeyChar();
-  final int selected = 1 + c - '1';
-  if (selected >= 1 && selected <= 4)
-    selectedBasis = selected;
 
-  if (c == '1')
-    patch.setBasis(Patch.BEZIER);
-  else if (c == '2')
-    patch.setBasis(Patch.BSPLINE);
-  else if (c == '3')
-    patch.setBasis(Patch.CATMULL_ROM);
-  else if (c == '4')
-    patch.setBasis(Patch.HERMITE);
+  if (c >= '1' && c <= '4') {
+    selectedBasis =  1 + c - '1';
+
+    if (c == '1')
+      patch.setBasis(Patch.BEZIER);
+    else if (c == '2')
+      patch.setBasis(Patch.BSPLINE);
+    else if (c == '3')
+      patch.setBasis(Patch.CATMULL_ROM);
+    else if (c == '4')
+      patch.setBasis(Patch.HERMITE);
+  } 
+  else if (c >= 'a' && c <= 'c') {
+    selectedFill =  1 + c - 'a';
+  }
+
 }
+
+
+
 
