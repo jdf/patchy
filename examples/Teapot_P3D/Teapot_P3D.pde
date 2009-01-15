@@ -998,15 +998,17 @@ PVector[][][] teapot = new PVector[][][] {
 
 Patch[] patches;
 BoundingVolume bounds;
+PImage tex;
 void setup() {
   size(600,600,P3D);
   patches = new Patch[teapot.length];
   bounds = new BoundingVolume();
   for (int i = 0; i < teapot.length; i++) {
-    patches[i] = Patch.create(Patch.BEZIER, teapot[i], 15);
+    patches[i] = Patch.create(Patch.BEZIER, teapot[i]);
     bounds = bounds.with(patches[i].getBounds());
   }
   new PeasyCam(this, bounds.x.center(), bounds.y.center(), bounds.z.center(),300);
+  tex = loadImage("checker_green.jpg");
 }
 void draw() {
   translate(bounds.x.center(), bounds.y.center(), bounds.z.center());
@@ -1020,7 +1022,7 @@ void draw() {
   noStroke();
   fill(160, 160, 160);
   for (int i = 0; i < patches.length; i++)
-    patches[i].draw(this);
+    patches[i].draw(this, tex);
   translate(0,0,bounds.z.minimum());
   ellipseMode(CENTER);
   ellipse(0,0,121,121);
