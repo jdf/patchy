@@ -236,7 +236,7 @@ public class Patch
 		final VertexWithNormal point = rasterizedPoints[row][col];
 		final PVector normal = point.normal;
 		final PVector vertex = point.vertex;
-		if (p.g.fill)
+		if (textured || p.g.fill)
 			p.normal(normal.x, normal.y, normal.z);
 		if (textured)
 			p.vertex(vertex.x, vertex.y, vertex.z, (float) col / rasterizedPoints.length,
@@ -252,7 +252,6 @@ public class Patch
 
 	public void draw(final PApplet p, final PImage texture)
 	{
-
 		if (dirty)
 			rasterize();
 		final VertexWithNormal[][] rp = rasterizedPoints;
