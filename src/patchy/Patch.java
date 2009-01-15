@@ -239,8 +239,8 @@ public class Patch
 		if (textured || p.g.fill)
 			p.normal(normal.x, normal.y, normal.z);
 		if (textured)
-			p.vertex(vertex.x, vertex.y, vertex.z, (float) col / rasterizedPoints.length,
-					(float) row / rasterizedPoints.length);
+			p.vertex(vertex.x, vertex.y, vertex.z, (float) col / gridSteps, (float) row
+					/ gridSteps);
 		else
 			p.vertex(vertex.x, vertex.y, vertex.z);
 	}
