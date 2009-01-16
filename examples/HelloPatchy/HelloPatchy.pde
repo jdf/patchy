@@ -7,7 +7,7 @@ BoundingVolume bounds;
 PeasyCam cam;
 int selectedBasis = 1;
 int selectedFill = 1;
-PImage tex;
+PImage paper, dude;
 
 void setup()
 {
@@ -35,7 +35,8 @@ void setup()
   scale = width / bounds.boundingSphereRadius();
   cam = new PeasyCam(this, bounds.x.center() * scale, bounds.y.center() * scale
     - 50, bounds.z.center() * scale, width);
-  tex = loadImage("gabeface.jpg");
+  paper = loadImage("smallpaper.jpg");
+  dude = loadImage("gabeface.jpg");
 }
 
 public void draw()
@@ -55,11 +56,11 @@ public void draw()
 
   lights();
 
-  if (selectedFill == 1) {
+  if (selectedFill == 1 || selectedFill == 4) {
     noStroke();
     pointLight(160, 160, 160, bounds.x.center() + 3 * bounds.boundingSphereRadius(),
     -(bounds.y.center() + bounds.boundingSphereRadius()), bounds.z.center());
-    patch.draw(this, tex);
+    patch.draw(this, selectedFill == 1 ? paper : dude);
   } 
   else if (selectedFill == 2) {
     noStroke();
@@ -94,11 +95,13 @@ private void instructions()
   text("4 - Hermite", 10, 60);
 
   fill(selectedFill == 1 ? color(0, 255, 0) : 255);
-  text("a - Textured", 10, 90);
+  text("a - Wallpaper", 10, 90);
   fill(selectedFill == 2 ? color(0, 255, 0) : 255);
   text("b - Filled", 10, 105);
   fill(selectedFill == 3 ? color(0, 255, 0) : 255);
   text("c - Wireframe", 10, 120);
+  fill(selectedFill == 4 ? color(0, 255, 0) : 255);
+  text("d - Little dude", 10, 135);
 
   fill(255);
   text("Drag to look around. Right-drag to zoom.", 10, height - 8);
@@ -135,7 +138,7 @@ public void keyPressed(final KeyEvent e)
     else if (c == '4')
       patch.setBasis(Patch.HERMITE);
   } 
-  else if (c >= 'a' && c <= 'c') {
+  else if (c >= 'a' && c <= 'd') {
     selectedFill =  1 + c - 'a';
   }
 
