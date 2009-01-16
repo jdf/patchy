@@ -45,14 +45,9 @@ import processing.core.PVector;
  * @author jdf
  *
  */
-public class Patch
+public class Patch implements Patchy
 {
 	private static final int DEFAULT_GRID_STEPS = 20;
-
-	public static final double[][] BEZIER = Bicubic.BEZIER;
-	public static final double[][] BSPLINE = Bicubic.BSPLINE;
-	public static final double[][] CATMULL_ROM = Bicubic.CATMULL_ROM;
-	public static final double[][] HERMITE = Bicubic.HERMITE;
 
 	// What kind of patch?
 	private double[][] basis;
@@ -68,12 +63,12 @@ public class Patch
 
 	private VertexWithNormal[][] rasterizedPoints;
 
-	public static Patch create(final double[][] basis, final PVector[][] controlPoints)
+	public static Patchy create(final double[][] basis, final PVector[][] controlPoints)
 	{
 		return create(basis, controlPoints, DEFAULT_GRID_STEPS);
 	}
 
-	public static Patch create(final double[][] basis, final PVector[][] controlPoints,
+	public static Patchy create(final double[][] basis, final PVector[][] controlPoints,
 			final int gridSteps)
 	{
 		if (basis.length != 4 || basis[0].length != 4)
@@ -95,13 +90,13 @@ public class Patch
 		return new Patch(basis, gridSteps, cpX, cpY, cpZ, false);
 	}
 
-	public static Patch create(final double[][] basis, final float[][] cpX,
+	public static Patchy create(final double[][] basis, final float[][] cpX,
 			final float[][] cpY, final float[][] cpZ)
 	{
 		return create(basis, cpX, cpY, cpZ, DEFAULT_GRID_STEPS);
 	}
 
-	public static Patch create(final double[][] basis, final float[][] cpX,
+	public static Patchy create(final double[][] basis, final float[][] cpX,
 			final float[][] cpY, final float[][] cpZ, final int gridSteps)
 	{
 		if (basis.length != 4 || basis[0].length != 4)
@@ -127,7 +122,7 @@ public class Patch
 		return new Patch(basis, gridSteps, dcpX, dcpY, dcpZ, false);
 	}
 
-	public static Patch create(final double[][] basis, final double[][] cpX,
+	public static Patchy create(final double[][] basis, final double[][] cpX,
 			final double[][] cpY, final double[][] cpZ)
 	{
 		return create(basis, cpX, cpY, cpZ, DEFAULT_GRID_STEPS);
@@ -230,6 +225,31 @@ public class Patch
 		dirty = true;
 	}
 
+	public BoundingVolume scale(final double scale)
+	{
+		for (int x = 0; x < 4; x++)
+			for (int y = 0; y < 4; y++)
+			{
+				cpX[x][y] *= scale;
+				cpY[x][y] *= scale;
+				cpZ[x][y] *= scale;
+			}
+		dirty = true;
+		return getBounds();
+	}
+
+	public void translate(final double dx, final double dy, final double dz)
+	{
+		for (int x = 0; x < 4; x++)
+			for (int y = 0; y < 4; y++)
+			{
+				cpX[x][y] += dx;
+				cpY[x][y] += dy;
+				cpZ[x][y] += dz;
+			}
+		dirty = true;
+	}
+
 	private void vertex(final PApplet p, final int row, final int col,
 			final boolean textured)
 	{
@@ -296,4 +316,5 @@ public class Patch
 				p.translate((float) -cpX[i][j], (float) -cpY[i][j], (float) -cpZ[i][j]);
 			}
 	}
+
 }
