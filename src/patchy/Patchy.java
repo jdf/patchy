@@ -33,6 +33,8 @@ public interface Patchy
 
 	public void draw(final PApplet p, final PImage texture);
 
+	public void drawControlPoints(final PApplet p);
+
 	public BoundingVolume scale(final double scale);
 
 	public void translate(final double dx, final double dy, final double dz);

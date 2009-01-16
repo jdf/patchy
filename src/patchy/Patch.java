@@ -63,12 +63,12 @@ public class Patch implements Patchy
 
 	private VertexWithNormal[][] rasterizedPoints;
 
-	public static Patchy create(final double[][] basis, final PVector[][] controlPoints)
+	public static Patch create(final double[][] basis, final PVector[][] controlPoints)
 	{
 		return create(basis, controlPoints, DEFAULT_GRID_STEPS);
 	}
 
-	public static Patchy create(final double[][] basis, final PVector[][] controlPoints,
+	public static Patch create(final double[][] basis, final PVector[][] controlPoints,
 			final int gridSteps)
 	{
 		if (basis.length != 4 || basis[0].length != 4)
@@ -90,13 +90,13 @@ public class Patch implements Patchy
 		return new Patch(basis, gridSteps, cpX, cpY, cpZ, false);
 	}
 
-	public static Patchy create(final double[][] basis, final float[][] cpX,
+	public static Patch create(final double[][] basis, final float[][] cpX,
 			final float[][] cpY, final float[][] cpZ)
 	{
 		return create(basis, cpX, cpY, cpZ, DEFAULT_GRID_STEPS);
 	}
 
-	public static Patchy create(final double[][] basis, final float[][] cpX,
+	public static Patch create(final double[][] basis, final float[][] cpX,
 			final float[][] cpY, final float[][] cpZ, final int gridSteps)
 	{
 		if (basis.length != 4 || basis[0].length != 4)
@@ -122,7 +122,7 @@ public class Patch implements Patchy
 		return new Patch(basis, gridSteps, dcpX, dcpY, dcpZ, false);
 	}
 
-	public static Patchy create(final double[][] basis, final double[][] cpX,
+	public static Patch create(final double[][] basis, final double[][] cpX,
 			final double[][] cpY, final double[][] cpZ)
 	{
 		return create(basis, cpX, cpY, cpZ, DEFAULT_GRID_STEPS);

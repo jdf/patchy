@@ -53,6 +53,13 @@ public class PatchGroup implements Patchy
 			patch.draw(p);
 	}
 
+	public void drawControlPoints(final PApplet p)
+	{
+		for (final Patchy patch : patches)
+			patch.drawControlPoints(p);
+
+	}
+
 	public BoundingVolume getBounds()
 	{
 		if (bounds == null)
