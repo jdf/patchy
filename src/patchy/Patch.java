@@ -71,8 +71,6 @@ public class Patch implements Patchy
 	public static Patch create(final double[][] basis, final PVector[][] controlPoints,
 			final int gridSteps)
 	{
-		if (basis.length != 4 || basis[0].length != 4)
-			throw new IllegalArgumentException("basis must be a 4x4 matrix");
 		if (controlPoints.length != 4 || controlPoints[0].length != 4)
 			throw new IllegalArgumentException("controlPoints must be a 4x4 matrix");
 
@@ -99,15 +97,6 @@ public class Patch implements Patchy
 	public static Patch create(final double[][] basis, final float[][] cpX,
 			final float[][] cpY, final float[][] cpZ, final int gridSteps)
 	{
-		if (basis.length != 4 || basis[0].length != 4)
-			throw new IllegalArgumentException("basis must be a 4x4 matrix");
-		if (cpX.length != 4 || cpX[0].length != 4)
-			throw new IllegalArgumentException("cpX must be a 4x4 matrix");
-		if (cpY.length != 4 || cpY[0].length != 4)
-			throw new IllegalArgumentException("cpY must be a 4x4 matrix");
-		if (cpZ.length != 4 || cpZ[0].length != 4)
-			throw new IllegalArgumentException("cpZ must be a 4x4 matrix");
-
 		final double[][] dcpX = new double[4][4];
 		final double[][] dcpY = new double[4][4];
 		final double[][] dcpZ = new double[4][4];
@@ -131,6 +120,12 @@ public class Patch implements Patchy
 	public static Patch create(final double[][] basis, final double[][] cpX,
 			final double[][] cpY, final double[][] cpZ, final int gridSteps)
 	{
+		return new Patch(basis, gridSteps, cpX, cpY, cpZ, true);
+	}
+
+	private Patch(final double[][] basis, final int gridSteps, final double[][] cpX,
+			final double[][] cpY, final double[][] cpZ, final boolean clone)
+	{
 		if (basis.length != 4 || basis[0].length != 4)
 			throw new IllegalArgumentException("basis must be a 4x4 matrix");
 		if (cpX.length != 4 || cpX[0].length != 4)
@@ -139,12 +134,6 @@ public class Patch implements Patchy
 			throw new IllegalArgumentException("cpY must be a 4x4 matrix");
 		if (cpZ.length != 4 || cpZ[0].length != 4)
 			throw new IllegalArgumentException("cpZ must be a 4x4 matrix");
-		return new Patch(basis, gridSteps, cpX, cpY, cpZ, true);
-	}
-
-	private Patch(final double[][] basis, final int gridSteps, final double[][] cpX,
-			final double[][] cpY, final double[][] cpZ, final boolean clone)
-	{
 		this.basis = basis.clone();
 		this.gridSteps = gridSteps;
 		this.cpX = clone ? cpX.clone() : cpX;
