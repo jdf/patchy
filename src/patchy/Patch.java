@@ -139,7 +139,7 @@ public class Patch implements Patchy
 		this.cpX = clone ? cpX.clone() : cpX;
 		this.cpY = clone ? cpY.clone() : cpY;
 		this.cpZ = clone ? cpZ.clone() : cpZ;
-		rasterize();
+		this.dirty = true;
 	}
 
 	public BoundingVolume getBounds()
