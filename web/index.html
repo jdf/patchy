@@ -138,14 +138,10 @@
 			</div>	
 			
 
-<h2>Patch Types (Basis Matrices)</h2>
-<pre class="prettyprint">Patch.BEZIER
-Patch.BSPLINE
-Patch.CATMULL_ROM
-Patch.HERMITE</pre>
-
-<h2>Constructing a Patch</h2>
-<pre class="prettyprint">// control points as a 4x4 matrix of PVectors
+<h2>Patch Types (Basis Matrices)</h2><pre class="prettyprint">Patchy.BEZIER
+Patchy.BSPLINE
+Patchy.CATMULL_ROM
+Patchy.HERMITE</pre><h2>Constructing a Patch or PatchGroup</h2><pre class="prettyprint">// control points as a 4x4 matrix of PVectors
 Patch.create(double[][] basis, PVector[][] controlPoints, int gridSteps);
 Patch.create(double[][] basis, PVector[][] controlPoints);  // default 20 grid steps
 
@@ -161,23 +157,26 @@ Patch.create(double[][] basis,
              float[][] cpX, float[][] cpY, float[][] cpZ, 
              int gridSteps);
 Patch.create(double[][] basis, 
-             float[][] cpX, float[][] cpY, float[][] cpZ);</pre>
-             
-<h2>Drawing a Patch</h2>
-<pre class="prettyprint">void draw(PApplet p); // uses current stroke, fill, and transforms
-void draw(PApplet p, PImage texture); // maps an image to the patch
+             float[][] cpX, float[][] cpY, float[][] cpZ);
+
+PatchGroup group = new PatchGroup();
+group.add(p1);
+group.add(p2);</pre><h2>Drawing a Patch or PatchGroup</h2><pre class="prettyprint">void draw(PApplet p); // uses current stroke, fill, and transforms
 void drawControlPoints(PApplet p);  // useful for debugging</pre>
 
-<h2>Other Useful Methods</h2>
+<h2>Other Useful Methods on Patch and PatchGroup</h2>
 <pre class="prettyprint">BoundingVolume getBounds();  // for figuring out scale and position
-void set(int row, int col, double xVal, double yVal, double zVal);
+BoundingVolume scale(double s); // scales the patch or group in-place
+void translate(double dx, double dy, double dz);  // translates the patch or group in-place
+void setBasis(double[][] basisMatrix);
+void setGridSteps(int steps); // change the resolution of the rendered mesh</pre>
+
+<h2>Methods on Patch (but not PatchGroup)
+</h2><pre class="prettyprint">void set(int row, int col, double xVal, double yVal, double zVal);
 void set(int row, int col, PVector p);
 void setX(int row, int col, double val);
 void setY(int row, int col, double val);
-void setZ(int row, int col, double val);
-
-// set the number of vertices created when rendering patch as triangles
-void setGridSteps(int gridSteps);</pre>
+void setZ(int row, int col, double val);</pre>
 
 			</div>
 			
