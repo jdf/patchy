@@ -28,7 +28,10 @@
 	<property name="source:url" value="http://code.google.com/p/patchy" />
 	<property name="source:repository" value="http://code.google.com/p/patchy/source/browse/" />
 
-
+	<property name="cygwin" value="c:/cygwin/bin"/>
+	<property name="chmod" value="${cygwin}/chmod.exe"/>
+	<property name="rsync" value="${cygwin}/rsync.exe"/>
+		
 	<!-- no changes or adjustments required below -->
 
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
@@ -58,6 +61,25 @@
 			<format property="date" pattern="MM/dd/yyyy" offset="0" unit="hour" />
 		</tstamp>
 		<mkdir dir="${dist}" />
+	</target>
+
+	<target name="pushweb" depends="build">
+		<exec executable="${chmod}" dir="distribution/web">
+			<arg value="-R"/>
+			<arg value="+rwX"/>
+			<arg value="*"/>
+		</exec>
+		<exec executable="${rsync}" dir="distribution/web">
+			<env key="PATH" value="${cygwin}"/>
+			<arg value="-azv"/>
+			<arg value="--exclude"/>
+			<arg value=".svn/"/>
+			<arg value="--delete"/>
+			<arg value="-e"/>
+			<arg value="ssh"/>
+			<arg value="*"/>
+			<arg value="mrfeinberg.com:/var/www/html/mrfeinberg.com/patchy"/>
+		</exec>
 	</target>
 
 	<!-- compile the library -->
