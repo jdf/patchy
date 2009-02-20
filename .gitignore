@@ -1,4 +1,5 @@
 bin
 distribution
 reference
-
+examples/*/applet
+web/Patchy.jar
