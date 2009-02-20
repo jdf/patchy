@@ -44,19 +44,25 @@ public class PatchGroup implements Patchy
 	public void draw(final PApplet p, final PImage texture)
 	{
 		for (final Patchy patch : patches)
+		{
 			patch.draw(p, texture);
+		}
 	}
 
 	public void draw(final PApplet p)
 	{
 		for (final Patchy patch : patches)
+		{
 			patch.draw(p);
+		}
 	}
 
 	public void drawControlPoints(final PApplet p)
 	{
 		for (final Patchy patch : patches)
+		{
 			patch.drawControlPoints(p);
+		}
 
 	}
 
@@ -66,7 +72,9 @@ public class PatchGroup implements Patchy
 		{
 			bounds = new BoundingVolume();
 			for (final Patchy patch : patches)
+			{
 				bounds = bounds.with(patch.getBounds());
+			}
 		}
 		return bounds;
 	}
@@ -74,21 +82,27 @@ public class PatchGroup implements Patchy
 	public void setBasis(final double[][] basis)
 	{
 		for (final Patchy patch : patches)
+		{
 			patch.setBasis(basis);
+		}
 		bounds = null;
 	}
 
 	public void setGridSteps(final int gridSteps)
 	{
 		for (final Patchy patch : patches)
+		{
 			patch.setGridSteps(gridSteps);
+		}
 		bounds = null;
 	}
 
 	public BoundingVolume scale(final double scale)
 	{
 		for (final Patchy patch : patches)
+		{
 			patch.scale(scale);
+		}
 		bounds = null;
 		return getBounds();
 	}
@@ -96,7 +110,9 @@ public class PatchGroup implements Patchy
 	public void translate(final double dx, final double dy, final double dz)
 	{
 		for (final Patchy patch : patches)
+		{
 			patch.translate(dx, dy, dz);
+		}
 		bounds = null;
 	}
 
@@ -117,7 +133,7 @@ public class PatchGroup implements Patchy
 			return BPTReader.read(new GZIPInputStream(Patch.class.getResourceAsStream(bpt
 					+ ".bpt.gz")));
 		}
-		catch (IOException e)
+		catch (final IOException e)
 		{
 			throw new RuntimeException(e);
 		}

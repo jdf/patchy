@@ -72,19 +72,23 @@ public class Patch implements Patchy
 			final int gridSteps)
 	{
 		if (controlPoints.length != 4 || controlPoints[0].length != 4)
+		{
 			throw new IllegalArgumentException("controlPoints must be a 4x4 matrix");
+		}
 
 		final double[][] cpX = new double[4][4];
 		final double[][] cpY = new double[4][4];
 		final double[][] cpZ = new double[4][4];
 
 		for (int i = 0; i < 4; i++)
+		{
 			for (int j = 0; j < 4; j++)
 			{
 				cpX[i][j] = controlPoints[i][j].x;
 				cpY[i][j] = controlPoints[i][j].y;
 				cpZ[i][j] = controlPoints[i][j].z;
 			}
+		}
 		return new Patch(basis, gridSteps, cpX, cpY, cpZ, false);
 	}
 
@@ -102,12 +106,14 @@ public class Patch implements Patchy
 		final double[][] dcpZ = new double[4][4];
 
 		for (int i = 0; i < 4; i++)
+		{
 			for (int j = 0; j < 4; j++)
 			{
 				dcpX[i][j] = cpX[i][j];
 				dcpY[i][j] = cpY[i][j];
 				dcpZ[i][j] = cpZ[i][j];
 			}
+		}
 		return new Patch(basis, gridSteps, dcpX, dcpY, dcpZ, false);
 	}
 
@@ -127,13 +133,21 @@ public class Patch implements Patchy
 			final double[][] cpY, final double[][] cpZ, final boolean clone)
 	{
 		if (basis.length != 4 || basis[0].length != 4)
+		{
 			throw new IllegalArgumentException("basis must be a 4x4 matrix");
+		}
 		if (cpX.length != 4 || cpX[0].length != 4)
+		{
 			throw new IllegalArgumentException("cpX must be a 4x4 matrix");
+		}
 		if (cpY.length != 4 || cpY[0].length != 4)
+		{
 			throw new IllegalArgumentException("cpY must be a 4x4 matrix");
+		}
 		if (cpZ.length != 4 || cpZ[0].length != 4)
+		{
 			throw new IllegalArgumentException("cpZ must be a 4x4 matrix");
+		}
 		this.basis = basis.clone();
 		this.gridSteps = gridSteps;
 		this.cpX = clone ? cpX.clone() : cpX;
@@ -145,7 +159,9 @@ public class Patch implements Patchy
 	public BoundingVolume getBounds()
 	{
 		if (dirty)
+		{
 			rasterize();
+		}
 		return bounds;
 	}
 
@@ -217,12 +233,14 @@ public class Patch implements Patchy
 	public BoundingVolume scale(final double scale)
 	{
 		for (int x = 0; x < 4; x++)
+		{
 			for (int y = 0; y < 4; y++)
 			{
 				cpX[x][y] *= scale;
 				cpY[x][y] *= scale;
 				cpZ[x][y] *= scale;
 			}
+		}
 		dirty = true;
 		return getBounds();
 	}
@@ -230,12 +248,14 @@ public class Patch implements Patchy
 	public void translate(final double dx, final double dy, final double dz)
 	{
 		for (int x = 0; x < 4; x++)
+		{
 			for (int y = 0; y < 4; y++)
 			{
 				cpX[x][y] += dx;
 				cpY[x][y] += dy;
 				cpZ[x][y] += dz;
 			}
+		}
 		dirty = true;
 	}
 
@@ -246,12 +266,18 @@ public class Patch implements Patchy
 		final PVector normal = point.normal;
 		final PVector vertex = point.vertex;
 		if (textured || p.g.fill)
+		{
 			p.normal(normal.x, normal.y, normal.z);
+		}
 		if (textured)
+		{
 			p.vertex(vertex.x, vertex.y, vertex.z, (float) col / gridSteps, (float) row
 					/ gridSteps);
+		}
 		else
+		{
 			p.vertex(vertex.x, vertex.y, vertex.z);
+		}
 	}
 
 	public void draw(final PApplet p)
@@ -262,7 +288,9 @@ public class Patch implements Patchy
 	public void draw(final PApplet p, final PImage texture)
 	{
 		if (dirty)
+		{
 			rasterize();
+		}
 		final VertexWithNormal[][] rp = rasterizedPoints;
 		p.beginShape(PConstants.TRIANGLE_STRIP);
 		final boolean textured = texture != null;
@@ -291,19 +319,23 @@ public class Patch implements Patchy
 			}
 		}
 		if (rp.length % 2 == 1)
+		{
 			vertex(p, rp.length - 1, 0, textured);
+		}
 		p.endShape();
 	}
 
 	public void drawControlPoints(final PApplet p)
 	{
 		for (int i = 0; i < 4; i++)
+		{
 			for (int j = 0; j < 4; j++)
 			{
 				p.translate((float) cpX[i][j], (float) cpY[i][j], (float) cpZ[i][j]);
 				p.box(.5f);
 				p.translate((float) -cpX[i][j], (float) -cpY[i][j], (float) -cpZ[i][j]);
 			}
+		}
 	}
 
 }

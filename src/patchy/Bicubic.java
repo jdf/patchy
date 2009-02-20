@@ -97,14 +97,16 @@ public class Bicubic
 		final int nRows = a.length;
 		final int nCols = b[0].length;
 		final int nSum = a[0].length;
-		double[][] outData = new double[nRows][nCols];
+		final double[][] outData = new double[nRows][nCols];
 		for (int row = 0; row < nRows; row++)
 		{
 			for (int col = 0; col < nCols; col++)
 			{
 				double sum = 0;
 				for (int i = 0; i < nSum; i++)
+				{
 					sum += a[row][i] * b[i][col];
+				}
 				outData[row][col] = sum;
 			}
 		}
@@ -115,8 +117,12 @@ public class Bicubic
 	{
 		final double[][] result = new double[4][4];
 		for (int i = 0; i < 4; i++)
+		{
 			for (int j = 0; j < 4; j++)
+			{
 				result[i][j] = m[j][i];
+			}
+		}
 		return result;
 	}
 
@@ -125,7 +131,9 @@ public class Bicubic
 		final int nSum = a[0].length;
 		double sum = 0;
 		for (int i = 0; i < nSum; i++)
+		{
 			sum += a[0][i] * b[i][0];
+		}
 		return sum;
 	}
 }
