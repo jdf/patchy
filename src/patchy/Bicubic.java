@@ -34,7 +34,7 @@ import processing.core.PVector;
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-public class Bicubic
+class Bicubic
 {
 	public static final double[][] BEZIER = { { -1, 3, -3, 1 }, { 3, -6, 3, 0 },
 			{ -3, 3, 0, 0 }, { 1, 0, 0, 0 } };
