@@ -1,6 +1,6 @@
 Patchy provides an easy-to-use bicubic patch for 3D graphics in the Processing programming environment.
 
-For a demo, and installation instructions, please see the "Patchy home page":http://mrfeinberg.com/patchy.
+For a demo, and installation instructions, please see the "Patchy home page":http://mrfeinberg.com/patchy/.
 
 <pre>import patchy.*;
 
