@@ -121,8 +121,8 @@
 		<javadoc bottom="processing library ${libraryName} by ${author}. ${copyright}" classpath="${libraryClasspath}/core.jar" destdir="${reference}" verbose="false" stylesheetfile="resources/stylesheet.css" doctitle="Javadocs: ${libraryName}" public="true" version="false" windowtitle="Javadocs: ${libraryName}">
 			<taglet name="ExampleTaglet" path="resources/code" />
 			<fileset dir="${src}" defaultexcludes="yes">
-				<!-- #### (9) add packages to be added to reference. #### -->
 				<include name="**/*" />
+				<exclude name="**/*.bpt.gz" />
 			</fileset>
 		</javadoc>
 
