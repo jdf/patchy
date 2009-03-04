@@ -35,6 +35,7 @@ void setup()
   scale = width / bounds.boundingSphereRadius();
   cam = new PeasyCam(this, bounds.x.center() * scale, bounds.y.center() * scale
     - 50, bounds.z.center() * scale, width);
+  cam.setMinimumDistance(width/2);
   paper = loadImage("smallpaper.jpg");
   dude = loadImage("gabeface.jpg");
 }
