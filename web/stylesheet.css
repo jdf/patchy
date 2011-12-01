@@ -11,12 +11,9 @@
 body {
 	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif; 
 	font-size : 100%; 
-    font-size : 0.70em;
 	font-weight : normal;
 	line-height	: normal;
 }
-
-
 
 #container {
 	margin-left:64px;
@@ -35,8 +32,6 @@ body {
 	margin-bottom:64px;
 }
 
-
-#demos { margin-bottom: 1.5em }
 
 #about,
 #download,
@@ -65,12 +60,15 @@ body {
 
 
 ul {
-	list-style:none;
+	list-style:disc;
 	padding:0;
-	margin:0;
+	margin: 0 0 1em 1em;
 }
 
-
+#menu ul {
+	list-style:none;
+	margin: 0;
+}
 #menu ul li, #subMenu ul li {
 	float:left;
 	padding-right:6px; 
@@ -98,10 +96,9 @@ h2, h3, h4, h5, th {
 
 
 p { 
-	font-size:1.1em;
+	font-size:1em;
 	width:90%;
-	margin-bottom:2em;
-	line-height: 130%;
+	margin-bottom:1em;
 }
 
 

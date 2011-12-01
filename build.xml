@@ -1,12 +1,13 @@
-<project name="processingLibs" default="build" basedir="../">
+<project name="processingLibs" default="build">
 
 	<description>
        Patchy build
     </description>
 
-	<property name="processing" location="c:/Documents and Settings/Administrator/Desktop/processing-1.0.1/libraries" />
+	<property name="processing" location="../processing-1.5.1" />
+	<property name="processingLibraries" location="C:/Documents and Settings/Administrator/My Documents/Processing/libraries" />
 
-	<property name="libraryClasspath" location="${processing}/../lib" />
+	<property name="libraryClasspath" location="${processing}/lib" />
 	<path id="library-classpath">
 		<fileset dir="${libraryClasspath}">
 			<include name="core.jar" />
@@ -15,23 +16,20 @@
 
 	<property name="javaVersion" value="1.5" />
 
-	<property name="author" value="Jonathan Feinberg" />
-	<property name="copyright" value="(c) 2008" />
-	<property name="libraryName" value="Patchy" />
-	<property name="versionNumber" value="0.3.0" />
+    <property file="library.properties" prefix="library" />
+
+    <property name="author" value="Jonathan Feinberg" />
+	<property name="copyright" value="(c) 2011" />
+	<property name="libraryName" value="patchy" />
 	<property name="yourLink" value="http://mrfeinberg.com/" />
 	<property name="keywords" value="bicubic,patch,Bezier,Hermite,Catmull-Rom,BSpline,parametric surface" />
 	<property name="tested:platform" value="Windows" />
-	<property name="tested:processingVersion" value="1.0.1" />
+	<property name="tested:processingVersion" value="1.5.1" />
 	<property name="tested:dependencies" value="" />
 	<property name="source:host" value="GitHub" />
 	<property name="source:url" value="http://github.com/jdf/patchy/" />
 	<property name="source:repository" value="http://github.com/jdf/patchy/" />
 
-	<property name="cygwin" value="c:/cygwin/bin"/>
-	<property name="chmod" value="${cygwin}/chmod.exe"/>
-	<property name="rsync" value="${cygwin}/rsync.exe"/>
-		
 	<!-- no changes or adjustments required below -->
 
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
@@ -39,20 +37,18 @@
 			<pathelement location="./resources/code/ant-contrib-1.0b3.jar" />
 		</classpath>
 	</taskdef>
-	<property name="jarFile" value="${libraryName}.jar" />
+	<property name="jarFile" value="patchy.jar" />
 	<property name="src" location="src" />
 	<property name="bin" location="bin" />
 	<property name="reference" location="reference" />
 	<property name="dist" location="distribution" />
-
-
 
 	<target name="init">
 		<echo>Properties initialized.
 	src path			${src}
 	bin path 			${bin}
 	libraryClasspath		${libraryClasspath}
-	processing Libraries	${processing}
+	processing Libraries	${processingLibraries}
 	java version		${javaVersion}
 	</echo>
 		<echo>building library ...</echo>
@@ -64,27 +60,27 @@
 	</target>
 
 	<target name="pushweb" depends="build">
-		<exec executable="${chmod}" dir="distribution/web">
-			<arg value="-R"/>
-			<arg value="+rwX"/>
-			<arg value="*"/>
+		<exec executable="sh" dir="distribution/web">
+			<arg value="-c"/>
+			<arg value="chmod -R +rwX *"/>
 		</exec>
-		<exec executable="${rsync}" dir="distribution/web">
-			<env key="PATH" value="${cygwin}"/>
-			<arg value="-azv"/>
-			<arg value="--exclude"/>
-			<arg value=".svn/"/>
-			<arg value="--delete"/>
-			<arg value="-e"/>
-			<arg value="ssh"/>
-			<arg value="*"/>
-			<arg value="mrfeinberg.com:/var/www/html/mrfeinberg.com/patchy"/>
+		<exec executable="sh" dir="distribution/web">
+			<arg value="-c"/>
+			<arg value="rsync -azv --exclude .svn --delete -e ssh * jdf@mrfeinberg.com:/var/www/html/mrfeinberg.com/patchy"/>
+		</exec>
+		<exec executable="sh" dir="distribution/web">
+			<arg value="-c"/>
+			<arg value="ssh jdf@mrfeinberg.com chmod -R a+rX /var/www/html/mrfeinberg.com/patchy"/>
 		</exec>
 	</target>
 
 	<!-- compile the library -->
 	<target name="compile" depends="init" description="compile the source">
-		<javac destdir="${bin}" source="${javaVersion}">
+		<echo message="bin: ${bin}"/>
+		<echo message="javaVersion: ${javaVersion}"/>
+		<echo message="library-classpath$ ${library-classpath}"/>
+        <mkdir dir="${bin}"/>
+		<javac target="${javaVersion}" destdir="${bin}" source="${javaVersion}">
 			<classpath>
 				<path refid="library-classpath" />
 			</classpath>
@@ -108,6 +104,9 @@
 		<mkdir dir="${realDist}/reference" />
 		<mkdir dir="${realDist}/src" />
 		<jar jarfile="${realDist}/library/${jarFile}" basedir="${bin}" />
+
+        <copy todir="${realDist}" file="library.properties"/>
+		
 		<copy todir="${realDist}/examples">
 			<fileset dir="examples" />
 		</copy>
@@ -131,14 +130,14 @@
 		</copy>
 
 		<!-- copy the jar file to processing's libraries -->
-		<copy todir="${processing}">
+		<copy todir="${processingLibraries}">
 			<fileset dir="${dist}" />
 		</copy>
 
 		<!-- zip the distribution of the library -->
 		<zip destfile="${dist}/${libraryName}.zip" basedir="${dist}" excludes="**/_DS.Store,**/applet/**" />
 
-		<rename src="${dist}/${libraryName}.zip" dest="${dist}/${libraryName}_${versionNumber}.zip" />
+		<copy file="${dist}/${libraryName}.zip" tofile="${dist}/${libraryName}_${library.version}.zip" />
 
 		<!-- organize the ${dist} folder -->
 		<mkdir dir="${dist}/web" />
@@ -156,26 +155,14 @@
 			<fileset dir="web" />
 		</copy>
 
-		<!--
-  	format the index.html file. 
-  	regular expressions are used to parse the web index.html file. 
-  	key words starting and ending with ## are replaced by values 
-  	defined earlier in the beginning of this build file.
-  	-->
+        <copy tofile="${dist}/web/patchy.txt" file="library.properties"/>
 
 		<replaceregexp file="${dist}/web/index.html" match="##yourLibrary##" replace="${libraryName}" flags="g" />
-
 		<replaceregexp file="${dist}/web/index.html" match="##author##" replace="${author}" flags="g" />
-
-		<replaceregexp file="${dist}/web/index.html" match="##versionNumber##" replace="${versionNumber}" flags="g" />
-
+		<replaceregexp file="${dist}/web/index.html" match="##versionNumber##" replace="${library.version}" flags="g" />
 		<replaceregexp file="${dist}/web/index.html" match="##yourLink##" replace="${yourLink}" flags="g" />
-
 		<replaceregexp file="${dist}/web/index.html" match="##date##" replace="${date}" flags="g" />
-
 		<replaceregexp file="${dist}/web/index.html" match="##keywords##" replace="${keywords}" flags="g" />
-
-
 
 		<replaceregexp file="${dist}/web/index.html" match="##tested:platform##" replace="${tested:platform}" flags="g" />
 		<replaceregexp file="${dist}/web/index.html" match="##tested:processingVersion##" replace="${tested:processingVersion}" flags="g" />
@@ -183,7 +170,6 @@
 		<replaceregexp file="${dist}/web/index.html" match="##source:host##" replace="${source:host}" flags="g" />
 		<replaceregexp file="${dist}/web/index.html" match="##source:url##" replace="${source:url}" flags="g" />
 		<replaceregexp file="${dist}/web/index.html" match="##source:repository##" replace="${source:repository}" flags="g" />
-
 
 		<echo>---------------------</echo>
 		<antcall target="processExamples" />
@@ -193,10 +179,10 @@
 
 
 		<!-- finish organizating library's distribution -->
-		<mkdir dir="${dist}/web/download" />
-		<copy file="${dist}/${libraryName}_${versionNumber}.zip" todir="${dist}/web/download" />
+        <copy file="${dist}/${libraryName}.zip" todir="${dist}/web" />
+		<copy file="${dist}/${libraryName}_${library.version}.zip" todir="${dist}/web" />
 
-		<copy todir="${processing}/${libraryName}/reference">
+		<copy todir="${processingLibraries}/patchy/reference">
 			<fileset dir="${reference}" />
 		</copy>
 
