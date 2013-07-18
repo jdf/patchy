@@ -18,123 +18,65 @@
 </head>
 <body>
 	<div id="container">
-	
+
 		<div id="header">
 			<h1>##yourLibrary## v##versionNumber##</h1>
 		</div>
-		
+
 		<div id="menu" class="clear">
 			<ul>
 				<li><a href="#about">About</a> \ </li>
 				<li><a href="#download">Download</a> \ </li>
 				<li><a href="#download">Installation</a> \ </li>
 				<!-- <li><a href="#examples">Examples</a> \ </li>-->
-				<li><a href="#demos">Demo</a> \ </li>				
 				<li><a href="./reference/index.html" target="_blank">Reference</a></li>
 				<!-- <li><a href="#misc">Misc</a> \ </li> -->
 				<!-- <li><a href="#images">Images</a> \ </li> -->
 			</ul>
 		</div>
-		
+
 		<div id="content" class="clear">
-						
+
 			<div id="about">
 			<h2>##yourLibrary## v##versionNumber##</h2>
 			<p>
 			A library by <a href="##yourLink##">##author##</a> for the programming environment <a href="http://www.processing.org" target="_blank">processing</a>. Last update, ##date##.
 			</p>
-			<p style="font-size: 120%; font-weight: bold">Patchy provides an easy-to-use bicubic patch for 
-3D graphics in the Processing programming environment. 
+			<p style="font-size: 120%; font-weight: bold">Patchy provides an easy-to-use bicubic patch for
+3D graphics in the Processing programming environment.
 </p>
-
-			<div id="demos" class="clear">
-			<!--[if !IE]> -->
-				<object classid="java:HelloPatchy.class" 
-            			type="application/x-java-applet"
-            			archive="HelloPatchy.jar,PeasyCam.jar,Patchy.jar,core.jar"
-            			width="400" height="400"
-            			standby="Loading Processing software..." >
-            			
-					<param name="archive" value="HelloPatchy.jar,PeasyCam.jar,Patchy.jar,core.jar" />
-				
-					<param name="mayscript" value="true" />
-					<param name="scriptable" value="true" />
-				
-					<param name="image" value="loading.gif" />
-					<param name="boxmessage" value="Loading Processing software..." />
-					<param name="boxbgcolor" value="#FFFFFF" />
-				
-					<param name="test_string" value="outer" />
-			<!--<![endif]-->
-				
-				<object classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" 
-						codebase="http://java.sun.com/update/1.5.0/jinstall-1_5_0_15-windows-i586.cab"
-						width="400" height="400"
-						standby="Loading Processing software..."  >
-						
-					<param name="code" value="HelloPatchy" />
-					<param name="archive" value="HelloPatchy.jar,PeasyCam.jar,Patchy.jar,core.jar" />
-					
-					<param name="mayscript" value="true" />
-					<param name="scriptable" value="true" />
-					
-					<param name="image" value="loading.gif" />
-					<param name="boxmessage" value="Loading Processing software..." />
-					<param name="boxbgcolor" value="#FFFFFF" />
-					
-					<param name="test_string" value="inner" />
-					
-					<p>
-						<strong>
-							This browser does not have a Java Plug-in.
-							<br />
-							<a href="http://java.sun.com/products/plugin/downloads/index.html" title="Download Java Plug-in">
-								Get the latest Java Plug-in here.
-							</a>
-						</strong>
-					</p>
-				
-				</object>
-				
-			<!--[if !IE]> -->
-				</object>
-			<!--<![endif]-->
-
-			</div>
-
-
 
 <h2>Acknowledgements</h2>
 <p>
 	I learned how to calculate bicubic surfaces by reading the
-	<a href="http://mrl.nyu.edu/%7Eperlin/courses/spring2009/splines4.html">course material</a> 
-	that <a href="http://www.mrl.nyu.edu/%7Eperlin/">Ken Perlin</a> 
-	so kindly provides. 
-	Part of Patchy is based on 
-	<a href="http://mrl.nyu.edu/%7Eperlin/cubic/Cubic_java.html">his code</a>, 
-	and I am very grateful for it. 
+	<a href="http://mrl.nyu.edu/%7Eperlin/courses/spring2009/splines4.html">course material</a>
+	that <a href="http://www.mrl.nyu.edu/%7Eperlin/">Ken Perlin</a>
+	so kindly provides.
+	Part of Patchy is based on
+	<a href="http://mrl.nyu.edu/%7Eperlin/cubic/Cubic_java.html">his code</a>,
+	and I am very grateful for it.
 </p>
 <p>
-	I learned how to calculate vertex normals, and how to choose 
-	vertexes for triangles when rendering, by studying 
-	<a href="http://tom3k.info/processing/bicubic_patch/bicubic_patch.pde">this code</a>, 
-	by <a href="http://tom3k.info/">Tomasz Kaczmarzyk</a> (tom3k). 
-	Tomasz was kind enough to explicitly license that code under the Apache 2.0 
-	license, so that I could freely share my work. Thank you, tom3k. 
+	I learned how to calculate vertex normals, and how to choose
+	vertexes for triangles when rendering, by studying
+	<a href="http://tom3k.info/processing/bicubic_patch/bicubic_patch.pde">this code</a>,
+	by <a href="http://tom3k.info/">Tomasz Kaczmarzyk</a> (tom3k).
+	Tomasz was kind enough to explicitly license that code under the Apache 2.0
+	license, so that I could freely share my work. Thank you, tom3k.
 </p>
 
 			<div id="download">
 			<h2>Download</h2>
 			<p>
-			Download ##yourLibrary## version ##versionNumber## in 
+			Download ##yourLibrary## version ##versionNumber## in
 			<a href="./download/##yourLibrary##_##versionNumber##.zip">.zip format</a>.
 			</p>
 			<h2>Installation</h2>
 			<p>
 			Unzip and put the extracted ##yourLibrary## folder into the libraries folder of your processing sketches. Reference and examples are included in the ##yourLibrary## folder.
 			</p>
-			</div>	
-			
+			</div>
+
 
 <h2>Patch Types (Basis Matrices)</h2><pre class="prettyprint">Patchy.BEZIER
 Patchy.BSPLINE
@@ -144,17 +86,17 @@ Patch.create(double[][] basis, PVector[][] controlPoints, int gridSteps);
 Patch.create(double[][] basis, PVector[][] controlPoints);  // default 20 grid steps
 
 // control points as three 4x4 matrices of x, y, and z coordinates
-Patch.create(double[][] basis, 
-             double[][] cpX, double[][] cpY, double[][] cpZ, 
+Patch.create(double[][] basis,
+             double[][] cpX, double[][] cpY, double[][] cpZ,
              int gridSteps);
-Patch.create(double[][] basis, 
+Patch.create(double[][] basis,
              double[][] cpX, double[][] cpY, double[][] cpZ);
 
 // the same but with floats, which are more Processing-friendly
-Patch.create(double[][] basis, 
-             float[][] cpX, float[][] cpY, float[][] cpZ, 
+Patch.create(double[][] basis,
+             float[][] cpX, float[][] cpY, float[][] cpZ,
              int gridSteps);
-Patch.create(double[][] basis, 
+Patch.create(double[][] basis,
              float[][] cpX, float[][] cpY, float[][] cpZ);
 
 PatchGroup group = new PatchGroup();
@@ -177,16 +119,16 @@ void setY(int row, int col, double val);
 void setZ(int row, int col, double val);</pre>
 
 			</div>
-			
+
 			<div id="resources">
 			<p><strong>Keywords</strong> ##keywords##</p>
-			<p><strong>Reference</strong>. Have a look at the javadoc reference <a href="./reference/index.html" target="_blank">here</a>. a copy of the reference is included in the .zip as well.</p>		
-			<p><strong>Source</strong>. The source code of ##yourLibrary## is 
-			available at <a href="##source:url##">##source:host##</a>, and its 
+			<p><strong>Reference</strong>. Have a look at the javadoc reference <a href="./reference/index.html" target="_blank">here</a>. a copy of the reference is included in the .zip as well.</p>
+			<p><strong>Source</strong>. The source code of ##yourLibrary## is
+			available at <a href="##source:url##">##source:host##</a>, and its
 			repository can be browsed <a href="##source:repository##" target="_blank">here</a>.
-			Fork it and fix it!</p>			
+			Fork it and fix it!</p>
 			</div>
-			
+
 			<div id="examples" class="clear">
 			<h2>Examples</h2>
 			<p>Find a list of examples in the current distribution of ##yourLibrary##, or have a look at them by following the links below.</p>
@@ -194,40 +136,40 @@ void setZ(int row, int col, double val);</pre>
 			##examples##
 			</ul>
 			</div>
-			
+
 			<div id="info">
 			<h2>Tested</h2>
 			<p>
 			<!-- on which platform has the library been tested? -->
 			<strong>Platform</strong> ##tested:platform##
-			
+
 			<!-- which processing version did you use for testing your library? -->
 			<br /><strong>Processing</strong> ##tested:processingVersion##
-			
+
 			<!-- does your library depend on any other library or framework? -->
 			<br /><strong>Dependencies</strong> ##tested:dependencies##
 			</p>
 			</div>
-		
-			
-			
+
+
+
 			<!-- use the misc section for other relevant information. Activate the link to the misc section in the menu above. -->
 			<!--
 			<div id="misc" class="clear">
 				<p></p>
 			</div>
 			-->
-			
+
 			<!-- use the images/screenshots section. Activate the link to the misc section in the menu above. -->
 			<!--
 			<div id="images" class="clear">
 			</div>
 			-->
-			
-			
+
+
 			<br class="clear" />
 		</div>
-		
+
 		<div id="footer">
 			<p>by ##author##, 2008.</p>
 		</div>
