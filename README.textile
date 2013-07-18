@@ -19,9 +19,7 @@ void draw() {
 
 h2. Acknowledgements
 
-I learned how to calculate bicubic surfaces by reading the "course material":http://mrl.nyu.edu/~perlin/courses/spring2009/splines4.html that "Ken Perlin":http://www.mrl.nyu.edu/~perlin/ so kindly provides.
-
-Part of Patchy is based on "his code":http://mrl.nyu.edu/~perlin/cubic/Cubic_java.html, and I am very grateful for it.
+I learned how to calculate bicubic surfaces by reading the "course material":http://mrl.nyu.edu/~perlin/courses/spring2009/splines4.html that "Ken Perlin":http://www.mrl.nyu.edu/~perlin/ so kindly provides. Part of Patchy is based on "his code":http://mrl.nyu.edu/~perlin/cubic/Cubic_java.html, and I am very grateful for it.
 
 I learned how to calculate vertex normals, and how to choose vertexes for triangles when rendering, by studying "this code":http://tom3k.info/processing/bicubic_patch/bicubic_patch.pde, by "Tomasz Kaczmarzyk":http://tom3k.info/ (tom3k). Tomasz was kind enough to explicitly license that code under the Apache 2.0 license, so that I could freely share my work. Thank you, tom3k.
 
