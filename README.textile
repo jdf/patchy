@@ -19,19 +19,11 @@ void draw() {
 
 h2. Acknowledgements
 
-I learned how to calculate bicubic surfaces by reading the 
-"course material":http://mrl.nyu.edu/~perlin/courses/spring2009/splines4.html
-that 
-"Ken Perlin":http://www.mrl.nyu.edu/~perlin/ so kindly provides. 
-Part of Patchy is based on "his code":http://mrl.nyu.edu/~perlin/cubic/Cubic_java.html, 
-and I am very grateful for it.
+I learned how to calculate bicubic surfaces by reading the "course material":http://mrl.nyu.edu/~perlin/courses/spring2009/splines4.html that "Ken Perlin":http://www.mrl.nyu.edu/~perlin/ so kindly provides.
 
-I learned how to calculate vertex normals, and how to choose vertexes 
-for triangles when rendering, by studying 
-"this code":http://tom3k.info/processing/bicubic_patch/bicubic_patch.pde, 
-by "Tomasz Kaczmarzyk":http://tom3k.info/ (tom3k). 
-Tomasz was kind enough to explicitly license that code under the 
-Apache 2.0 license, so that I could freely share my work. Thank you, tom3k.
+Part of Patchy is based on "his code":http://mrl.nyu.edu/~perlin/cubic/Cubic_java.html, and I am very grateful for it.
+
+I learned how to calculate vertex normals, and how to choose vertexes for triangles when rendering, by studying "this code":http://tom3k.info/processing/bicubic_patch/bicubic_patch.pde, by "Tomasz Kaczmarzyk":http://tom3k.info/ (tom3k). Tomasz was kind enough to explicitly license that code under the Apache 2.0 license, so that I could freely share my work. Thank you, tom3k.
 
 h2. Patch Types (Basis Matrices)
 
@@ -47,17 +39,17 @@ Patch.create(double[][] basis, PVector[][] controlPoints, int gridSteps);
 Patch.create(double[][] basis, PVector[][] controlPoints);  // default 20 grid steps
 
 // control points as three 4x4 matrices of x, y, and z coordinates
-Patch.create(double[][] basis, 
-             double[][] cpX, double[][] cpY, double[][] cpZ, 
+Patch.create(double[][] basis,
+             double[][] cpX, double[][] cpY, double[][] cpZ,
              int gridSteps);
-Patch.create(double[][] basis, 
+Patch.create(double[][] basis,
              double[][] cpX, double[][] cpY, double[][] cpZ);
 
 // the same but with floats, which are more Processing-friendly
-Patch.create(double[][] basis, 
-             float[][] cpX, float[][] cpY, float[][] cpZ, 
+Patch.create(double[][] basis,
+             float[][] cpX, float[][] cpY, float[][] cpZ,
              int gridSteps);
-Patch.create(double[][] basis, 
+Patch.create(double[][] basis,
              float[][] cpX, float[][] cpY, float[][] cpZ);
 
 PatchGroup group = new PatchGroup();
@@ -73,7 +65,7 @@ h2. Other Useful Methods on Patch and PatchGroup
 
 <pre>BoundingVolume getBounds();  // for figuring out scale and position
 BoundingVolume scale(double s); // scales the patch or group in-place
-void translate(double dx, double dy, 
+void translate(double dx, double dy,
    double dz);  // translates the patch or group in-place
 void setBasis(double[][] basisMatrix);
 void setGridSteps(int steps); // change the resolution of the rendered mesh</pre>
@@ -89,5 +81,5 @@ void setZ(int row, int col, double val);
 // set the number of vertices created when rendering patch as triangles
 void setGridSteps(int gridSteps);</pre>
 
-Are you looking for the "Patchy" extension to the Mantis bug-tracking system? 
+Are you looking for the "Patchy" extension to the Mantis bug-tracking system?
 That's "on sourceforge":http://sourceforge.net/projects/patchy/.
