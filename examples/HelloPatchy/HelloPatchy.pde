@@ -9,39 +9,37 @@ int selectedBasis = 1;
 int selectedFill = 1;
 PImage paper, dude;
 
-void setup()
-{
+void setup() {
   size(400, 400, P3D);
 
-  try
-  {
+  try {
     textFont(new PFont(createInput("TheSans-Plain-12.vlw")), 12);
-  }
-  catch (IOException e)
-  {
+  } catch (IOException e) {
     e.printStackTrace();
   }
 
-  final double[][] cpX = new double[][] { { 23, 41, 59, 77 }, { 23, 41, 59, 77 },
-    { 23, 41, 59, 77 }, { 23, 41, 59, 77 } };
+  final double[][] cpX = new double[][] { { 23, 41, 59, 77 },
+    { 23, 41, 59, 77 }, { 23, 41, 59, 77 }, { 23, 41, 59, 77 }
+  };
   final double[][] cpY = new double[][] { { 0, 0, 0, 0 }, { 0, 40, 40, 0 },
-    { 0, 40, 40, 0 }, { 0, 0, 0, 0 } };
+    { 0, 40, 40, 0 }, { 0, 0, 0, 0 }
+  };
   final double[][] cpZ = new double[][] { { 23, 23, 23, 23 }, { 41, 41, 41, 41 },
-    { 59, 59, 59, 59 }, { 77, 77, 77, 77 } };
+    { 59, 59, 59, 59 }, { 77, 77, 77, 77 }
+  };
 
   patch = Patch.create(Patch.BEZIER, cpX, cpY, cpZ);
 
   bounds = patch.getBounds();
   scale = width / bounds.boundingSphereRadius();
   cam = new PeasyCam(this, bounds.x.center() * scale, bounds.y.center() * scale
-    - 50, bounds.z.center() * scale, width);
-  cam.setMinimumDistance(width/2);
+                     - 50, bounds.z.center() * scale, width);
+  cam.setMinimumDistance(width / 2);
   paper = loadImage("smallpaper.jpg");
   dude = loadImage("gabeface.jpg");
 }
 
-public void draw()
-{
+public void draw() {
   animateControlPoints();
 
   background(0);
@@ -60,19 +58,17 @@ public void draw()
   if (selectedFill == 1 || selectedFill == 4) {
     noStroke();
     pointLight(160, 160, 160, bounds.x.center() + 3 * bounds.boundingSphereRadius(),
-    -(bounds.y.center() + bounds.boundingSphereRadius()), bounds.z.center());
+               -(bounds.y.center() + bounds.boundingSphereRadius()), bounds.z.center());
     patch.draw(this, selectedFill == 1 ? paper : dude);
-  } 
-  else if (selectedFill == 2) {
+  } else if (selectedFill == 2) {
     noStroke();
     pointLight(160, 50, 50, bounds.x.center() + 3 * bounds.boundingSphereRadius(),
-    -(bounds.y.center() + bounds.boundingSphereRadius()), bounds.z.center());
+               -(bounds.y.center() + bounds.boundingSphereRadius()), bounds.z.center());
     fill(160, 160, 40);
     patch.draw(this);
-  } 
-  else {
+  } else {
     noFill();
-    stroke(0, 255, 0); 
+    stroke(0, 255, 0);
     patch.draw(this);
   }
   noStroke();
@@ -83,9 +79,8 @@ public void draw()
   instructions();
 }
 
-private void instructions()
-{
-  textMode(SCREEN);
+private void instructions() {
+  cam.beginHUD();
   fill(selectedBasis == 1 ? color(0, 255, 0) : 255);
   text("1 - Bezier", 10, 15);
   fill(selectedBasis == 2 ? color(0, 255, 0) : 255);
@@ -106,43 +101,36 @@ private void instructions()
 
   fill(255);
   text("Drag to look around. Right-drag to zoom.", 10, height - 8);
+  cam.endHUD();
 }
 
-private void animateControlPoints()
-{
+private void animateControlPoints() {
   patch.setY(1, 2, 50f * cos(frameCount / 30f));
   patch.setY(1, 1, 50f * cos(frameCount / 30f));
   patch.setY(2, 1, -50f * cos(frameCount / 20f));
   patch.setY(2, 2, -50f * cos(frameCount / 20f));
   for (int i = 0; i < 4; i++)
-    for (int j = 0; j < 4; j++)
-    {
+    for (int j = 0; j < 4; j++) {
       if ((i == 1 || i == 2) && (j == 1 || j == 2))
         continue;
       patch.setY(i, j, 10 * cos((j * PI / 4) + frameCount / ((i + 1) * 10f)));
     }
 }
 
-public void keyPressed(final KeyEvent e)
-{
-  final char c = e.getKeyChar();
-
-  if (c >= '1' && c <= '4') {
-    selectedBasis =  1 + c - '1';
-
-    if (c == '1')
+public void keyPressed() {
+  if (key >= '1' && key <= '4') {
+    selectedBasis =  1 + key - '1';
+    if (key == '1')
       patch.setBasis(Patch.BEZIER);
-    else if (c == '2')
+    else if (key == '2')
       patch.setBasis(Patch.BSPLINE);
-    else if (c == '3')
+    else if (key == '3')
       patch.setBasis(Patch.CATMULL_ROM);
-    else if (c == '4')
+    else if (key == '4')
       patch.setBasis(Patch.HERMITE);
-  } 
-  else if (c >= 'a' && c <= 'd') {
-    selectedFill =  1 + c - 'a';
+  } else if (key >= 'a' && key <= 'd') {
+    selectedFill =  1 + key - 'a';
   }
-
 }
 
 

@@ -1,207 +1,167 @@
-<project name="processingLibs" default="build">
+<project default="build" name="processingLibs">
+  <description>Patchy build</description>
 
-	<description>
-       Patchy build
-    </description>
+  <property location="../processing" name="processing"/>
 
-	<property name="processing" location="../processing-1.5.1" />
-	<property name="processingLibraries" location="C:/Documents and Settings/Administrator/My Documents/Processing/libraries" />
+  <path id="library-classpath">
+    <fileset dir="${processing}/core/library">
+      <include name="core.jar"/>
+    </fileset>
+  </path>
 
-	<property name="libraryClasspath" location="${processing}/lib" />
-	<path id="library-classpath">
-		<fileset dir="${libraryClasspath}">
-			<include name="core.jar" />
-		</fileset>
-	</path>
+  <property file="library.properties" prefix="library"/>
 
-	<property name="javaVersion" value="1.5" />
+  <property name="javaVersion" value="1.6"/>
 
-    <property file="library.properties" prefix="library" />
+  <property name="author" value="Jonathan Feinberg"/>
+  <property name="copyright" value="(c) 2013"/>
+  <property name="libraryName" value="patchy"/>
+  <property name="yourLink" value="http://mrfeinberg.com/"/>
+  <property name="keywords" value="bicubic,patch,Bezier,Hermite,Catmull-Rom,BSpline,parametric surface"/>
+  <property name="tested:platform" value="Windows"/>
+  <property name="tested:processingVersion" value="2.0"/>
+  <property name="tested:dependencies" value=""/>
+  <property name="source:host" value="GitHub"/>
+  <property name="source:url" value="http://github.com/jdf/patchy/"/>
+  <property name="source:repository" value="http://github.com/jdf/patchy/"/>
 
-    <property name="author" value="Jonathan Feinberg" />
-	<property name="copyright" value="(c) 2011" />
-	<property name="libraryName" value="patchy" />
-	<property name="yourLink" value="http://mrfeinberg.com/" />
-	<property name="keywords" value="bicubic,patch,Bezier,Hermite,Catmull-Rom,BSpline,parametric surface" />
-	<property name="tested:platform" value="Windows" />
-	<property name="tested:processingVersion" value="1.5.1" />
-	<property name="tested:dependencies" value="" />
-	<property name="source:host" value="GitHub" />
-	<property name="source:url" value="http://github.com/jdf/patchy/" />
-	<property name="source:repository" value="http://github.com/jdf/patchy/" />
+  <!-- no changes or adjustments required below -->
 
-	<!-- no changes or adjustments required below -->
+  <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+    <classpath>
+      <pathelement location="./resources/code/ant-contrib-1.0b3.jar"/>
+    </classpath>
+  </taskdef>
 
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
-		<classpath>
-			<pathelement location="./resources/code/ant-contrib-1.0b3.jar" />
-		</classpath>
-	</taskdef>
-	<property name="jarFile" value="patchy.jar" />
-	<property name="src" location="src" />
-	<property name="bin" location="bin" />
-	<property name="reference" location="reference" />
-	<property name="dist" location="distribution" />
+  <property name="jarFile" value="patchy.jar"/>
+  <property location="src" name="src"/>
+  <property location="bin" name="bin"/>
+  <property location="reference" name="reference"/>
+  <property location="distribution" name="dist"/>
 
-	<target name="init">
-		<echo>Properties initialized.
-	src path			${src}
-	bin path 			${bin}
-	libraryClasspath		${libraryClasspath}
-	processing Libraries	${processingLibraries}
-	java version		${javaVersion}
-	</echo>
-		<echo>building library ...</echo>
-		<!-- Create the time stamp -->
-		<tstamp>
-			<format property="date" pattern="MM/dd/yyyy" offset="0" unit="hour" />
-		</tstamp>
-		<mkdir dir="${dist}" />
-	</target>
+  <target name="init">
+    <echo>Properties initialized.
+  src path      ${src}
+  bin path      ${bin}
+  libraryClasspath    ${libraryClasspath}
+  java version    ${javaVersion}</echo>
+    <echo>building library ...</echo>
+    <tstamp>
+      <format offset="0" pattern="MM/dd/yyyy" property="date" unit="hour"/>
+    </tstamp>
+    <mkdir dir="${dist}"/>
+  </target>
 
-	<target name="pushweb" depends="build">
-		<exec executable="sh" dir="distribution/web">
-			<arg value="-c"/>
-			<arg value="chmod -R +rwX *"/>
-		</exec>
-		<exec executable="sh" dir="distribution/web">
-			<arg value="-c"/>
-			<arg value="rsync -azv --exclude .svn --delete -e ssh * jdf@mrfeinberg.com:/var/www/html/mrfeinberg.com/patchy"/>
-		</exec>
-		<exec executable="sh" dir="distribution/web">
-			<arg value="-c"/>
-			<arg value="ssh jdf@mrfeinberg.com chmod -R a+rX /var/www/html/mrfeinberg.com/patchy"/>
-		</exec>
-	</target>
+  <target name="pushweb" depends="build">
+    <exec dir="distribution/web" executable="sh">
+      <arg value="-c"/>
+      <arg value="chmod -R +rwX *"/>
+    </exec>
+    <exec dir="distribution/web" executable="sh">
+      <arg value="-c"/>
+      <arg value="rsync -azv --exclude .svn --delete -e ssh * jdf@mrfeinberg.com:/var/www/html/mrfeinberg.com/patchy"/>
+    </exec>
+    <exec dir="distribution/web" executable="sh">
+      <arg value="-c"/>
+      <arg value="ssh jdf@mrfeinberg.com chmod -R a+rX /var/www/html/mrfeinberg.com/patchy"/>
+    </exec>
+  </target>
 
-	<!-- compile the library -->
-	<target name="compile" depends="init" description="compile the source">
-		<echo message="bin: ${bin}"/>
-		<echo message="javaVersion: ${javaVersion}"/>
-		<echo message="library-classpath$ ${library-classpath}"/>
-        <mkdir dir="${bin}"/>
-		<javac target="${javaVersion}" destdir="${bin}" source="${javaVersion}">
-			<classpath>
-				<path refid="library-classpath" />
-			</classpath>
-			<src path="${src}" />
-		</javac>
-	</target>
+  <!-- compile the library -->
+  <target name="compile" depends="init" description="compile the source">
+    <echo message="bin: ${bin}"/>
+    <echo message="javaVersion: ${javaVersion}"/>
+    <echo message="library-classpath$ ${library-classpath}"/>
+    <mkdir dir="${bin}"/>
+    <javac destdir="${bin}" source="${javaVersion}" target="${javaVersion}">
+      <classpath>
+        <path refid="library-classpath"/>
+      </classpath>
+      <src path="${src}"/>
+    </javac>
+    <copy toDir="${bin}">
+      <fileset dir="src" excludes="**/*.java" />
+    </copy>
+  </target>
 
-	<!-- build the distribution of the library -->
-	<target name="build" depends="compile" description="generate the distribution">
-		<!-- delete the previous content of the ${dist} folder -->
-		<delete dir="${dist}" />
-
-		<!-- build the structure for ${dist} -->
-		<mkdir dir="${dist}" />
-		
-		<property name="realDist" value="${dist}/patchy"/>
-		<mkdir dir="${realDist}" />
-
-		<mkdir dir="${realDist}/library" />
-		<mkdir dir="${realDist}/examples" />
-		<mkdir dir="${realDist}/reference" />
-		<mkdir dir="${realDist}/src" />
-		<jar jarfile="${realDist}/library/${jarFile}" basedir="${bin}" />
-
-        <copy todir="${realDist}" file="library.properties"/>
-		
-		<copy todir="${realDist}/examples">
-			<fileset dir="examples" />
-		</copy>
-		<copy todir="${realDist}/src">
-			<fileset dir="src" />
-		</copy>
-		<copy todir="web" file="${realDist}/library/${jarFile}"/>
-
-		<!-- create the java reference of the library -->
-		<mkdir dir="${reference}" />
-		<javadoc bottom="processing library ${libraryName} by ${author}. ${copyright}" classpath="${libraryClasspath}/core.jar" destdir="${reference}" verbose="false" stylesheetfile="resources/stylesheet.css" doctitle="Javadocs: ${libraryName}" public="true" version="false" windowtitle="Javadocs: ${libraryName}">
-			<taglet name="ExampleTaglet" path="resources/code" />
-			<fileset dir="${src}" defaultexcludes="yes">
-				<include name="**/*" />
-				<exclude name="**/*.bpt.gz" />
-			</fileset>
-		</javadoc>
-
-		<copy todir="${realDist}/reference">
-			<fileset dir="${reference}" />
-		</copy>
-
-		<!-- copy the jar file to processing's libraries -->
-		<copy todir="${processingLibraries}">
-			<fileset dir="${dist}" />
-		</copy>
-
-		<!-- zip the distribution of the library -->
-		<zip destfile="${dist}/${libraryName}.zip" basedir="${dist}" excludes="**/_DS.Store,**/applet/**" />
-
-		<copy file="${dist}/${libraryName}.zip" tofile="${dist}/${libraryName}_${library.version}.zip" />
-
-		<!-- organize the ${dist} folder -->
-		<mkdir dir="${dist}/web" />
-		<move todir="${dist}/web/reference">
-			<fileset dir="${realDist}/reference" />
-		</move>
-
-		<move todir="${dist}/web/examples">
-			<fileset dir="${realDist}/examples" />
-		</move>
-
-		<delete dir="${dist}/library" />
-
-		<copy todir="${dist}/web">
-			<fileset dir="web" />
-		</copy>
-
-        <copy tofile="${dist}/web/patchy.txt" file="library.properties"/>
-
-		<replaceregexp file="${dist}/web/index.html" match="##yourLibrary##" replace="${libraryName}" flags="g" />
-		<replaceregexp file="${dist}/web/index.html" match="##author##" replace="${author}" flags="g" />
-		<replaceregexp file="${dist}/web/index.html" match="##versionNumber##" replace="${library.version}" flags="g" />
-		<replaceregexp file="${dist}/web/index.html" match="##yourLink##" replace="${yourLink}" flags="g" />
-		<replaceregexp file="${dist}/web/index.html" match="##date##" replace="${date}" flags="g" />
-		<replaceregexp file="${dist}/web/index.html" match="##keywords##" replace="${keywords}" flags="g" />
-
-		<replaceregexp file="${dist}/web/index.html" match="##tested:platform##" replace="${tested:platform}" flags="g" />
-		<replaceregexp file="${dist}/web/index.html" match="##tested:processingVersion##" replace="${tested:processingVersion}" flags="g" />
-		<replaceregexp file="${dist}/web/index.html" match="##tested:dependencies##" replace="${tested:dependencies}" flags="g" />
-		<replaceregexp file="${dist}/web/index.html" match="##source:host##" replace="${source:host}" flags="g" />
-		<replaceregexp file="${dist}/web/index.html" match="##source:url##" replace="${source:url}" flags="g" />
-		<replaceregexp file="${dist}/web/index.html" match="##source:repository##" replace="${source:repository}" flags="g" />
-
-		<echo>---------------------</echo>
-		<antcall target="processExamples" />
-		<echo>---------------------</echo>
-
-		<replaceregexp file="${dist}/web/index.html" match="##examples##" replace="" flags="g" />
-
-
-		<!-- finish organizating library's distribution -->
-        <copy file="${dist}/${libraryName}.zip" todir="${dist}/web" />
-		<copy file="${dist}/${libraryName}_${library.version}.zip" todir="${dist}/web" />
-
-		<copy todir="${processingLibraries}/patchy/reference">
-			<fileset dir="${reference}" />
-		</copy>
-
-		<!-- done, finished. -->
-		<echo>done, finished.</echo>
-	</target>
-
-
-
-	<!-- parsing the examples folder -->
-	<target name="processExamples">
-		<dirset id="examples.contents" dir="examples" excludes="*/*" />
-		<property name="examples.list" refid="examples.contents" />
-		<foreach list="${examples.list}" target="addExamples" param="exampleDir" delimiter=";">
-		</foreach>
-	</target>
-
-	<target name="addExamples">
-		<replaceregexp file="${dist}/web/index.html" match="(##examples##)" replace="&lt;li&gt;&lt;a href=&quot;examples/${exampleDir}/applet/index.html&quot;&gt;${exampleDir}&lt;/a&gt;&lt;/li&gt; \1" flags="g" />
-	</target>
+  <!-- build the distribution of the library -->
+  <target depends="compile" description="generate the distribution" name="build">
+    <!-- delete the previous content of the ${dist} folder -->
+    <delete dir="${dist}"/>
+    <!-- build the structure for ${dist} -->
+    <mkdir dir="${dist}"/>
+    <property name="realDist" value="${dist}/patchy"/>
+    <mkdir dir="${realDist}"/>
+    <mkdir dir="${realDist}/library"/>
+    <mkdir dir="${realDist}/examples"/>
+    <mkdir dir="${realDist}/reference"/>
+    <mkdir dir="${realDist}/src"/>
+    <jar basedir="${bin}" jarfile="${realDist}/library/${jarFile}"/>
+    <copy file="library.properties" todir="${realDist}"/>
+    <copy todir="${realDist}/examples">
+      <fileset dir="examples"/>
+    </copy>
+    <copy todir="${realDist}/src">
+      <fileset dir="src"/>
+    </copy>
+    <copy file="${realDist}/library/${jarFile}" todir="web"/>
+    <!-- create the java reference of the library -->
+    <mkdir dir="${reference}"/>
+    <javadoc bottom="processing library ${libraryName} by ${author}. ${copyright}" classpath="${libraryClasspath}/core.jar" destdir="${reference}" doctitle="Javadocs: ${libraryName}" public="true" stylesheetfile="resources/stylesheet.css" verbose="false" version="false" windowtitle="Javadocs: ${libraryName}">
+      <taglet name="ExampleTaglet" path="resources/code"/>
+      <fileset defaultexcludes="yes" dir="${src}">
+        <include name="**/*"/>
+        <exclude name="**/*.bpt.gz"/>
+      </fileset>
+    </javadoc>
+    <copy todir="${realDist}/reference">
+      <fileset dir="${reference}"/>
+    </copy>
+    <!-- zip the distribution of the library -->
+    <zip basedir="${dist}" destfile="${dist}/${libraryName}.zip" excludes="**/_DS.Store,**/applet/**"/>
+    <copy file="${dist}/${libraryName}.zip" tofile="${dist}/${libraryName}_${library.version}.zip"/>
+    <!-- organize the ${dist} folder -->
+    <mkdir dir="${dist}/web"/>
+    <move todir="${dist}/web/reference">
+      <fileset dir="${realDist}/reference"/>
+    </move>
+    <copy todir="${dist}/web/examples">
+      <fileset dir="${realDist}/examples"/>
+    </copy>
+    <delete dir="${dist}/library"/>
+    <copy todir="${dist}/web">
+      <fileset dir="web"/>
+    </copy>
+    <copy file="library.properties" tofile="${dist}/web/patchy.txt"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##yourLibrary##" replace="${libraryName}"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##author##" replace="${author}"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##versionNumber##" replace="${library.version}"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##yourLink##" replace="${yourLink}"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##date##" replace="${date}"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##keywords##" replace="${keywords}"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##tested:platform##" replace="${tested:platform}"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##tested:processingVersion##" replace="${tested:processingVersion}"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##tested:dependencies##" replace="${tested:dependencies}"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##source:host##" replace="${source:host}"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##source:url##" replace="${source:url}"/>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##source:repository##" replace="${source:repository}"/>
+    <echo>---------------------</echo>
+    <antcall target="processExamples"/>
+    <echo>---------------------</echo>
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="##examples##" replace=""/>
+    <!-- finish organizating library's distribution -->
+    <copy file="${dist}/${libraryName}.zip" todir="${dist}/web"/>
+    <copy file="${dist}/${libraryName}_${library.version}.zip" todir="${dist}/web"/>
+    <!-- done, finished. -->
+    <echo>done, finished.</echo>
+  </target>
+  <!-- parsing the examples folder -->
+  <target name="processExamples">
+    <dirset dir="examples" excludes="*/*" id="examples.contents"/>
+    <property name="examples.list" refid="examples.contents"/>
+    <foreach delimiter=";" list="${examples.list}" param="exampleDir" target="addExamples"/>
+  </target>
+  <target name="addExamples">
+    <replaceregexp file="${dist}/web/index.html" flags="g" match="(##examples##)" replace="&lt;li&gt;&lt;a href=&quot;examples/${exampleDir}/applet/index.html&quot;&gt;${exampleDir}&lt;/a&gt;&lt;/li&gt; \1"/>
+  </target>
 </project>
-

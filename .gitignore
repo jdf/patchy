@@ -3,4 +3,5 @@ distribution
 reference
 examples/*/applet
 web/Patchy.jar
+web/patchy.jar
 web/PeasyCam.jar
